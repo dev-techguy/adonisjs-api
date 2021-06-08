@@ -39,6 +39,7 @@ export default class PostsController {
   public async store({ auth, request, response }: HttpContextContract) {
     const user = await auth.authenticate();
     const post = new Post();
+    post.user_id = user.id;
     post.title = request.input('title');
     post.content = request.input('content');
     post.forum_id = request.input('forum');
@@ -47,8 +48,7 @@ export default class PostsController {
   }
 
   public async destroy({ auth, params, response }: HttpContextContract) {
-    const user = await auth.authenticate();
-    const post = await Post.query().where('user_id', user.id).where('id', params.id).delete();
+    const post = await Post.query().where('id', params.id).delete();
     return response.json(post);
   }
 }

@@ -39,6 +39,7 @@ export default class ForumsController {
   public async store({ auth, request, response }: HttpContextContract) {
     const user = await auth.authenticate();
     const forum = new Forum();
+    forum.user_id = user.id;
     forum.title = request.input('title');
     forum.description = request.input('description');
     await user.related('forums').save(forum)
@@ -46,8 +47,7 @@ export default class ForumsController {
   }
 
   public async destroy({ auth, params, response }: HttpContextContract) {
-    const user = await auth.authenticate();
-    const forum = await Forum.query().where('user_id', user.id).where('id', params.id).delete();
+    const forum = await Forum.query().where('id', params.id).delete();
     return response.json(forum);
   }
 }
