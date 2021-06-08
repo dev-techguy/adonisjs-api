@@ -32,14 +32,18 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany(() => Post)
+  @hasMany(() => Post, {
+    'foreignKey': 'user_id'
+  })
   public posts: HasMany<typeof Post>;
-  
-  @hasMany(() => Forum)
+
+  @hasMany(() => Forum, {
+    'foreignKey': 'user_id'
+  })
   public forums: HasMany<typeof Forum>;
 
   @beforeSave()
-  public static async hashPassword (user: User) {
+  public static async hashPassword(user: User) {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }

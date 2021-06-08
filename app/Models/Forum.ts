@@ -22,9 +22,13 @@ export default class Forum extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => User)
+  @belongsTo(() => User{
+    'foreignKey': 'user_id'
+  })
   public user: BelongsTo<typeof User>;
 
-  @hasMany(() => Post)
+  @hasMany(() => Post, {
+    'foreignKey': 'forum_id'
+  })
   public posts: HasMany<typeof Post>;
 }
