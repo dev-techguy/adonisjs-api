@@ -15,9 +15,7 @@ export default class Posts extends BaseSchema {
       table
         .integer('forum_id')
         .unsigned()
-        .references('forums.id')
         .notNullable()
-        .onDelete('CASCADE') // delete posts when forum is deleted
       table.string("title", 255).notNullable()
       table.string("content", 255).notNullable()
       table.timestamps(true)
