@@ -20,6 +20,25 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
+Route.get('/', async ({ response }) => {
+  return response.json([
+    "AdonisJS Rest API"
+  ])
 })
+
+Route.group(() => {
+  Route.post("register", "AuthController.register");
+  Route.post("login", "AuthController.login");
+
+  Route.group(() => {
+    Route.resource("posts", "PostsController").apiOnly();
+    Route.resource("forums", "ForumsController").apiOnly();
+
+    Route.group(() => {
+      Route.get("forums", "UsersController.forumsByUser");
+      Route.get("posts", "UsersController.postsByUser");
+    }).prefix("users");
+
+  }).middleware("auth:api");
+
+}).prefix("api");
