@@ -51,6 +51,8 @@ AdonisJs REST API with CRUD and Model Relationships covered.
 	"content":"Hello post one"
 }
 
+// response 
+
 {
   "user_id": 1,
   "title": "Post One",
