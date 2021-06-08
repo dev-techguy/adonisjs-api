@@ -42,13 +42,15 @@ export default class PostsController {
     post.user_id = user.id;
     post.title = request.input('title');
     post.content = request.input('content');
-    post.forum_id = request.input('forum');
+    post.forum_id = request.input('forum_id');
     await user.related('posts').save(post)
     return response.json(post);
   }
 
   public async destroy({ auth, params, response }: HttpContextContract) {
-    const post = await Post.query().where('id', params.id).delete();
+    const user = await auth.authenticate();
+    const post = await Post.query().where('user_id', user.id).where('id', params.id).first();
+    post.delete();
     return response.json(post);
   }
 }

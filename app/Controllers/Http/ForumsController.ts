@@ -47,7 +47,9 @@ export default class ForumsController {
   }
 
   public async destroy({ auth, params, response }: HttpContextContract) {
-    const forum = await Forum.query().where('id', params.id).delete();
+    const user = await auth.authenticate();
+    const forum = await Forum.query().where('user_id', user.id).where('id', params.id).first();
+    forum.delete();
     return response.json(forum);
   }
 }
