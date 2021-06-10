@@ -8,7 +8,7 @@ AdonisJs REST API with CRUD and Model Relationships covered.
 - Clone the project to your local machine.
 - Copy *.env.example* to *.env*
 - Update the database connection details.
-- Then serve the application using ```bash node ace serve --watch ```
+- Then serve the application using ``` node ace serve --watch ```
 
 ### Sample Responses
 
